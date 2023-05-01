@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "resource.h"
-#include "../bubble_sort/resource.h"
+#include "../sorting_algorithms/bubble_sort/resource.h"
 
 
 void read_csv(FILE *file, int *buffer, long file_size){
@@ -38,7 +38,6 @@ void write_csv(FILE *file, int *buffer, int buffer_size){
             exit(1);
         }
         fputc(';', file);
-        printf("[%d]\n", i);
     }
     printf("\nSuccessfully write\n");
 }

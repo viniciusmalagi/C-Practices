@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "resource.h"
-#include "../bubble_sort/resource.h"
+#include "../sorting_algorithms/bubble_sort/resource.h"
+#include "../sorting_algorithms/resource.h"
 
 int main(){
     FILE *r_file, *w_file;
@@ -25,11 +26,11 @@ int main(){
     read_csv(r_file, buffer, file_size);
     fclose(r_file);
     printf("\n********** BEFORE SORT **************\n");
-    show_array(buffer, buffer_size);
+    do_show_array(buffer, buffer_size);
 
     bubble_sort(buffer, buffer_size);
     printf("\n********** AFTER SORT **************\n");
-    show_array(buffer, buffer_size);
+    do_show_array(buffer, buffer_size);
     write_csv(w_file, buffer, buffer_size);
     fclose(w_file);
     free(buffer);
