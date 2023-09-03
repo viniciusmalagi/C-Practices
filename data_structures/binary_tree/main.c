@@ -69,7 +69,7 @@ struct Node* do_append_node(struct Node* node, int value) {
 
 int do_find_node(struct Node* node, int data){
     if (node->data != data && node->left == NULL && node->right == NULL)
-        return -1;
+        return 0;
     else if (node->data == data)
         return 1;
     else if (data > node->data)
@@ -80,28 +80,17 @@ int do_find_node(struct Node* node, int data){
 
 int do_remove_node(struct Node* node, int data){
     if (node->data == data && node->left == NULL && node->left == NULL)
-        return 1;
-    else if (data > node->data && do_remove_node(node->right, data) > 0)
-    {
+        return 0;
+    else if (data > node->data && !do_remove_node(node->right, data))
         node->right = NULL;
-        return 1;
-    }
-    else if (data < node->data && do_remove_node(node->left, data) > 0)
-    {
+    else if (data < node->data && !do_remove_node(node->left, data))
         node->left = NULL;
-        return 1;
-    }
-    else{
-        return -1;
-    }
-
+    return 1;
 }
 
 void do_call_node_remover(struct Node* node, int data){
-    if (do_find_node(node, data) > 0 && do_remove_node(node, data) > 0)
+    if (do_find_node(node, data) && do_remove_node(node, data))
         printf("\nNode (%d) removed!\n", data);
-    else
-        printf("\nNode (%d) Not found!\n", data);
 }
 
 void do_print_in_order(struct Node* node) {
