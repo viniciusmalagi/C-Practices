@@ -30,13 +30,10 @@ int main() {
     my_node = do_append_node(my_node, 53);
     my_node = do_append_node(my_node, 77);
 
+    printf("(Before removal) Binary Tree in order: ");
     do_print_in_order(my_node);
     printf("\n");
-    int x  = do_find_node(my_node, 7);
-    printf("\nResult -> %d\n", x);
     do_call_node_remover(my_node, 7);
-
-
     printf("Binary Tree in order: ");
     do_print_in_order(my_node);
     printf("\n");
@@ -73,36 +70,38 @@ struct Node* do_append_node(struct Node* node, int value) {
 int do_find_node(struct Node* node, int data){
     if (node->data != data && node->left == NULL && node->right == NULL)
         return -1;
-    if (node->data == data)
+    else if (node->data == data)
         return 1;
     else if (data > node->data)
-        do_find_node(node->right, data);
+        return do_find_node(node->right, data);
     else if (data < node->data)
-        do_find_node(node->left, data);
+        return do_find_node(node->left, data);
 }
 
 int do_remove_node(struct Node* node, int data){
-    if (node->data == data && node->left == NULL && node->left == NULL) {
-        printf("\nRemovi node -> %d\n", node);
+    if (node->data == data && node->left == NULL && node->left == NULL)
+        return 1;
+    else if (data > node->data && do_remove_node(node->right, data) > 0)
+    {
+        node->right = NULL;
         return 1;
     }
-    else if (data > node->data) {
-        if (do_remove_node(node->right, data) > 0){
-            node->right = NULL;
-            return -1;
-        }
-    } else if (data < node->data) {
-        if (do_remove_node(node->left, data) > 0)
-            node->left = NULL;
+    else if (data < node->data && do_remove_node(node->left, data) > 0)
+    {
+        node->left = NULL;
+        return 1;
     }
     else{
         return -1;
     }
+
 }
 
 void do_call_node_remover(struct Node* node, int data){
-    if (do_find_node(node, data) > 0)
-        do_remove_node(node, data);
+    if (do_find_node(node, data) > 0 && do_remove_node(node, data) > 0)
+        printf("\nNode (%d) removed!\n", data);
+    else
+        printf("\nNode (%d) Not found!\n", data);
 }
 
 void do_print_in_order(struct Node* node) {
